@@ -1,0 +1,19 @@
+shared/
+  components
+  pipes
+  directives
+  utils
+  models
+  services
+  store
+  **
+
+pages
+  page-1
+     pages
+     components
+     models
+     services
+     store
+     utils
+     **
