@@ -1,4 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+@use "./styles/overrides";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,9 +17,4 @@ body {
 }
 body {
   margin: 0;
-}
-
-.primary-button {
-  border: 1px solid #e4e7ec !important;
-  @apply text-primary py-3 px-6 rounded-lg #{!important};
 }
