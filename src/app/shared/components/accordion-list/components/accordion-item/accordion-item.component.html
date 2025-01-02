@@ -5,24 +5,32 @@
       <span class="text-sm text-gray-500"> Maktabgach ta’lim </span>
     </div>
 
-    <button mat-icon-button class="custom-icon-button">
+    <button
+      mat-icon-button
+      class="custom-icon-button"
+      (click)="toggleOpenBtn()"
+    >
       <mat-icon> keyboard_arrow_down </mat-icon>
     </button>
   </div>
   <div class="max-h-[400px] overflow-y-auto">
-    <p class="text-sm text-gray-700 gilroy-medium">
-      cement text. The input for the third stage is then a stream of characters
+    <p
+      class="text-sm text-gray-700 gilroy-medium transition-all"
+      [class.truncate]="!isOpened()"
+    >
+      Cement text. The input for the third stage is then a stream of characters
       (including the ones with special meaning) and unexpandable control
       sequences (typically assignments and visual commands). Here, the
       characters get assembled into a paragraph, and TeX's paragraph breaking
       algorithm works by optimizing breakpoints over the whole paragraph.
     </p>
   </div>
-  <div class="flex justify-end items-center gap-3">
+  @if(isOpened()) {
+  <div class="flex justify-end items-center gap-3 overflow-hidden">
     <button mat-button class="primary-icon-button !bg-gray-100 reaction-active">
       <span class="flex items-center gap-2">
         10 K
-        <mat-icon class="!w-6 !h-6" svgIcon="dislike" color="red"></mat-icon>
+        <mat-icon class="!w-6 !h-6" svgIcon="dislike"></mat-icon>
       </span>
     </button>
 
@@ -33,4 +41,5 @@
       </span>
     </button>
   </div>
+  }
 </div>

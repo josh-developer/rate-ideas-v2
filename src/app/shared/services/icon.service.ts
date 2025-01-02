@@ -3,7 +3,10 @@ import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 
 export enum Icons {
-   Dislike = 'dislike'
+   Dislike = 'dislike',
+   CustomEmail = 'custom-email',
+   EyeOpen = 'eye-open',
+   EyeClose = 'eye-close',
 }
 
 @Injectable({

@@ -8,6 +8,11 @@ export const routes: Routes = [
       import('./pages/home/home.component'),
   },
   {
+    path: 'login',
+    loadComponent: () =>
+      import('./pages/login/login.component'),
+  },
+  {
     path: 'not-found',
     loadComponent: () =>
       import('./shared/components/not-found/not-found.component'),
