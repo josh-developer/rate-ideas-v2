@@ -1,0 +1,12 @@
+.login-bg {
+  @apply h-full w-full overflow-hidden 
+  relative z-10 rounded-[29px] 
+  bg-cover bg-center bg-no-repeat bg-[url('../../../../public/images/login-bg.webp')];
+}
+
+.login-bg-grid {
+  @apply h-full w-full bg-cover
+    absolute top-0 right-[47%] -z-10
+    bg-center bg-no-repeat 
+    bg-[url('../../../../public/images/login-grid.webp')];
+}

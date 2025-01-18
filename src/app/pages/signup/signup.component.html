@@ -1,24 +1,23 @@
 <div class="pl-24 pr-6 py-11 w-full h-full">
   <div class="w-full h-full grid grid-cols-2 gap-8 items-center">
-    <form autocomplete="off" class="flex flex-col gap-12 p-6 max-w-[600px]">
+    <form class="flex flex-col gap-12 p-6 max-w-[600px]">
       <div class="flex flex-col gap-2.5">
-        <h1 class="text-gray-700 text-4xl">Log in to your account</h1>
-        <span class="gilroy-medium text-lg text-gray-500"
-          >Enter your email address and pasword to login</span
-        >
+        <h1 class="text-gray-700 text-4xl">Sign up</h1>
       </div>
 
       <div class="flex flex-col gap-3">
-        <app-input [placeholder]="'Enter your username or email'" />
+        <app-input [placeholder]="'Your name'" />
+        <app-datepicker
+          placeholder="Your birthdate"
+          [max]="ageRestrictions.max"
+          [min]="ageRestrictions.min" />
+        <app-input type="email" [placeholder]="'Your email'" />
         <app-input [placeholder]="'Enter your password'" [type]="'password'" />
-        <a href="#" class="gilroy-medium text-right text-sm text-blue-600">
-          Forgot password
-        </a>
         <button
           type="button"
           mat-button
           class="primary-icon-button !bg-success !text-white">
-          Login
+          Sign up
         </button>
         <div class="h-0.5 w-[70%] bg-gray-200 relative my-2 mx-auto">
           <span
@@ -28,15 +27,15 @@
         </div>
 
         <p class="text-lg gilroy-medium text-center text-gray-500">
-          <span>Don't you have an account?</span>
-          <a href="#" class="gilroy-medium text-blue-600"> Sign Up </a>
+          <span>Do you have an account?</span>
+          <a href="#" class="gilroy-medium text-blue-600"> Login </a>
         </p>
       </div>
     </form>
 
     <div class="h-full relative">
-      <div class="login-bg"></div>
-      <div class="login-bg-grid"></div>
+      <div class="signup-bg"></div>
+      <div class="signup-bg-grid"></div>
     </div>
   </div>
 </div>

@@ -24,6 +24,7 @@ export class InputComponent {
   isPasswordHidden = signal(false);
 
   type = input<'text' | 'password' | 'email'>(InputTypes.Text);
+  placeholder = input<string>('');
 
   inputTypes = InputTypes;
 

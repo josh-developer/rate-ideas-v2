@@ -7,6 +7,7 @@ export enum Icons {
    CustomEmail = 'custom-email',
    EyeOpen = 'eye-open',
    EyeClose = 'eye-close',
+   Date = 'date',
 }
 
 @Injectable({

@@ -1,10 +1,11 @@
 <div
   #inputContainer
-  class="bg-gray-50 flex items-center gap-2 rounded-lg py-2.5 px-3.5 border border-[#D0D5DD] border-solid"
->
-  <mat-icon svgIcon="custom-email" />
+  (click)="input.focus()"
+  class="bg-gray-50 flex items-center gap-2 cursor-pointer rounded-lg py-2.5 px-3.5 border border-[#D0D5DD] border-solid">
+  <mat-icon svgIcon="custom-email" class="!min-w-6" />
 
   <input
+    #input
     [type]="
       !isPasswordHidden()
         ? type()
@@ -13,17 +14,12 @@
         : type()
     "
     (blur)="onBlur()"
-    placeholder="Enter your password"
+    [placeholder]="placeholder()"
     (focus)="onFocus()"
-    class="bg-transparent w-full focus:outline-none"
-  />
+    class="bg-transparent w-full focus:outline-none" />
 
   @if(type() === inputTypes.Password) {
-  <button
-    type="button"
-    class="h-6 relative text-gray-500"
-    (click)="onPasswordToggle()"
-  >
+  <button type="button" class="h-6 relative text-gray-500" (click)="onPasswordToggle()">
     <mat-icon [svgIcon]="!isPasswordHidden() ? 'eye-open' : 'eye-close'" />
   </button>
   }

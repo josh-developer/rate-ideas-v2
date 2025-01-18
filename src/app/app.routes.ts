@@ -13,6 +13,11 @@ export const routes: Routes = [
       import('./pages/login/login.component'),
   },
   {
+    path: 'signup',
+    loadComponent: () =>
+      import('./pages/signup/signup.component'),
+  },
+  {
     path: 'not-found',
     loadComponent: () =>
       import('./shared/components/not-found/not-found.component'),
