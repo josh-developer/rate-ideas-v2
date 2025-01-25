@@ -1,0 +1,13 @@
+.confirm-card {
+  @apply flex flex-col gap-8 items-center py-8 px-6 
+    rounded-2xl min-w-[400px] max-w-[624px] 
+    border-2 border-gray-300 border-solid;
+
+  box-shadow: 0px 2px 4px -2px #1018280f;
+
+  .icon-container {
+    @apply flex items-center justify-center 
+    bg-success-50 rounded-xl py-[11px] px-[14px] 
+    border border-[#6CE9A6] border-solid;
+  }
+}

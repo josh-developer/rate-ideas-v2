@@ -4,23 +4,23 @@ export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'home',
-    loadComponent: () =>
-      import('./pages/home/home.component'),
+    loadComponent: () => import('./pages/home/home.component'),
   },
   {
     path: 'login',
-    loadComponent: () =>
-      import('./pages/login/login.component'),
+    loadComponent: () => import('./pages/login/login.component'),
   },
   {
     path: 'signup',
-    loadComponent: () =>
-      import('./pages/signup/signup.component'),
+    loadComponent: () => import('./pages/signup/signup.component'),
+  },
+  {
+    path: 'confirmation',
+    loadComponent: () => import('./pages/confirmation/confirmation.component'),
   },
   {
     path: 'not-found',
-    loadComponent: () =>
-      import('./shared/components/not-found/not-found.component'),
+    loadComponent: () => import('./shared/components/not-found/not-found.component'),
   },
   { path: '**', redirectTo: 'not-found' },
 ];

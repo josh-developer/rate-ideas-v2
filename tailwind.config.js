@@ -1,21 +1,24 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,ts}"],
+  content: ['./src/**/*.{html,ts}'],
   theme: {
     extend: {
       fontSize: {
-        "primary-heading": ["1.375rem", "1.815rem"],
+        'primary-heading': ['1.375rem', '1.815rem'],
       },
       backgroundColor: {
-        primary: "#F2F4F7",
-        secondary: "#F7F9FC",
-        success: "#02BF67",
+        primary: '#F2F4F7',
+        secondary: '#F7F9FC',
+        success: '#02BF67',
+        'success-50': '#ECFDF3',
       },
       textColor: {
-        primary: "#1D2939",
+        primary: '#1D2939',
+        secondary: '#101828',
+        info: '#475467',
       },
       borderColor: {
-        primary: "#E4E7EC",
+        primary: '#E4E7EC',
       },
     },
   },
