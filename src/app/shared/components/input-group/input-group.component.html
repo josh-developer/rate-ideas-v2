@@ -7,6 +7,7 @@
     [name]="item.toString()"
     [maxLength]="1"
     type="text"
+    (focus)="onFocus(item.toString())"
     (input)="onInputFill(item.toString())"
     class="input-container" />
   }

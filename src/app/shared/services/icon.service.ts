@@ -8,6 +8,7 @@ export enum Icons {
    EyeOpen = 'eye-open',
    EyeClose = 'eye-close',
    Date = 'date',
+   Trash = 'trash',
 }
 
 @Injectable({

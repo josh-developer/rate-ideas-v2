@@ -14,26 +14,26 @@ export class InputGroupComponent {
   inputs = viewChildren<ElementRef<HTMLInputElement>>('input');
 
   readonly inputsArray = Array.from({ length: this.inputCount() }, (_, i) => i);
-  onInputFill(id: string): void {
-    const currentInputIndex = this.inputs().findIndex(inp => {
-      return inp.nativeElement.id === id;
-    });
 
-    const input = this.inputs().at(currentInputIndex)?.nativeElement!;
+  onInputFill(id: string): void {
+    const { input, currIndex } = this.getCurrentInput(id)!;
 
     input.value = input.value.trim();
-
     if (input.value.length === 0) {
       input?.classList.remove('active');
       input.value = '';
+      this.inputs()
+        .at(currIndex !== 0 ? currIndex - 1 : currIndex)
+        ?.nativeElement.focus();
+
       return;
     }
 
     input.classList.add('active');
 
-    if (currentInputIndex < this.inputCount() - 1) {
+    if (currIndex < this.inputCount() - 1) {
       this.inputs()
-        .at(currentInputIndex + 1)
+        .at(currIndex + 1)
         ?.nativeElement.focus();
 
       const isAllFilled = this.inputs().every(inp => inp.nativeElement.value.trim());
@@ -43,6 +43,28 @@ export class InputGroupComponent {
     } else {
       this.emit();
     }
+  }
+
+  onFocus(id: string): void {
+    const { input } = this.getCurrentInput(id);
+
+    setTimeout(() => {
+      input.setSelectionRange(input.value.length, input.value.length);
+    }, 0);
+  }
+
+  getCurrentInput(id: string): {
+    input: HTMLInputElement;
+    currIndex: number;
+  } {
+    const currentInputIndex = this.inputs().findIndex(inp => {
+      return inp.nativeElement.id === id;
+    });
+
+    return {
+      input: this.inputs().at(currentInputIndex)!.nativeElement,
+      currIndex: currentInputIndex,
+    };
   }
 
   emit(): void {

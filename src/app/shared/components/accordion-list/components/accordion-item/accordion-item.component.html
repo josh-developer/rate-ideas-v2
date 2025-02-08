@@ -24,6 +24,7 @@
   </div>
   @if(isOpened()) {
   <div class="flex justify-end items-center gap-3 overflow-hidden">
+    @if(canReact()) {
     <button mat-button class="primary-icon-button !bg-gray-100 reaction-active">
       <span class="flex items-center gap-2">
         10 K
@@ -37,6 +38,14 @@
         <mat-icon class="!w-6 !h-6" svgIcon="dislike"></mat-icon>
       </span>
     </button>
+    } @if(canRemove()) {
+    <button mat-button class="primary-icon-button !bg-gray-100">
+      <span class="flex items-center gap-2 text-red-500">
+        Delete
+        <mat-icon class="!w-6 !h-6" svgIcon="trash"></mat-icon>
+      </span>
+    </button>
+    }
   </div>
   }
 </div>

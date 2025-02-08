@@ -1,0 +1,12 @@
+<main class="p-6 pb-2 bg-white">
+  <app-navbar />
+  <div class="py-6 flex flex-col items-end">
+    <button 
+    (click)="openDialog()"
+    mat-button class="primary-button !bg-success !text-white">Add</button>
+
+    <app-tab class="w-full" (tabChange)="onTabsChange($event)" [tabs]="tabs()" />
+  </div>
+
+  <app-accordion-list title="My ideas" [canRemove]="true" [canReact]="false" />
+</main>

@@ -1,10 +1,8 @@
-<nav
-  class="w-full bg-primary rounded-xl py-5 px-6 flex items-center justify-between"
->
-  <h1 class="text-2xl">Idea-up</h1>
+<nav class="w-full bg-primary rounded-xl py-5 px-6 flex items-center justify-between">
+  <button class="text-2xl" [routerLink]="['/home']">Idea-up</button>
   <div class="flex gap-3 items-center">
-    <button mat-button class="primary-button !bg-white">My ideas</button>
-    <button mat-button class="primary-button !bg-white">Saved ideas</button>
+    <button mat-button class="primary-button !bg-white" [routerLink]="['/my-ideas']" routerLinkActive="!text-blue-400">My ideas</button>
+    <button mat-button class="primary-button !bg-white" [routerLink]="['/saved']" routerLinkActive="!text-blue-400">Saved ideas</button>
     <button mat-button class="primary-button !bg-white">Account</button>
   </div>
 </nav>

@@ -1,6 +1,10 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 
 :root {
+  --mdc-filled-text-field-container-color: rgb(
+    242 244 247 / var(--tw-bg-opacity, 1)
+  ) !important;
+  
   .custom-icon-button {
     @apply bg-gray-100 rounded-md hover:bg-gray-200 w-12;
 
@@ -25,6 +29,4 @@
   color: #1d2939 !important;
   padding: 0.75rem 1rem !important;
   border-radius: 0.5rem !important;
-
-
 }
