@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Account</h2>
+<hr />
+<mat-dialog-content>
+  <form class="w-full flex flex-col gap-4 p-2 pb-6">
+    <!-- --------- Name input --------- -->
+    <app-input [placeholder]="'Change your name'" />
+
+    <!-- --------- Last name input --------- -->
+    <app-input [placeholder]="'Change your lastname'" />
+
+    <!-- --------- Email input --------- -->
+    <app-input [placeholder]="'Change your email'" />
+
+    <!-- --------- Password input --------- -->
+    <app-input [placeholder]="'Change your password'" [type]="'password'" />
+  </form>
+</mat-dialog-content>
+<hr />
+<mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-button class="!bg-success !text-white">Save</button>
+</mat-dialog-actions>

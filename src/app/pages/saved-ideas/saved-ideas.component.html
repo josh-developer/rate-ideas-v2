@@ -1,0 +1,8 @@
+<main class="p-6 pb-2 bg-white">
+  <app-navbar />
+  <div class="py-6 flex flex-col items-end">
+    <app-tab class="w-full" (tabChange)="onTabsChange($event)" [tabs]="tabs()" />
+  </div>
+
+  <app-accordion-list title="Saved ideas" [canRemove]="false" [canReact]="true" />
+</main>

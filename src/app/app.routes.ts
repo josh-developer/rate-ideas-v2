@@ -11,6 +11,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/my-ideas/my-ideas.component'),
   },
   {
+    path: 'saved-ideas',
+    loadComponent: () => import('./pages/saved-ideas/saved-ideas.component'),
+  },
+  {
     path: 'login',
     loadComponent: () => import('./pages/login/login.component'),
   },

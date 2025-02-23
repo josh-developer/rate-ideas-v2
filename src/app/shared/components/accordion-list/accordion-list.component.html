@@ -2,8 +2,12 @@
   <h2 class="text-primary-heading text-gray-900 mb-6">{{ title() }}</h2>
 
   <div class="flex flex-col gap-3">
-    @for(item of [1, 2, 3]; track item) {
-    <app-accordion-item [canReact]="canReact()" [canRemove]="canRemove()" />
+    @for(item of ideaStore.ideas(); track item.id) {
+    <app-accordion-item
+      [item]="item"
+      (onSave)="onSaveClick($event)"
+      [canReact]="canReact()"
+      [canRemove]="canRemove()" />
     }
   </div>
 </div>

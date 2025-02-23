@@ -2,10 +2,15 @@
   #inputContainer
   (click)="input.focus()"
   class="bg-gray-50 flex items-center gap-2 cursor-pointer rounded-lg py-2.5 px-3.5 border border-[#D0D5DD] border-solid">
-  <mat-icon svgIcon="custom-email" class="!min-w-6 text-[#667085]" />
+  @if(icon()) {
+  <mat-icon [svgIcon]="icon()" class="!min-w-6 text-[#667085]" />
+  }
 
   <input
     #input
+    [value]="innerValue"
+    (input)="onInputChange(input.value)"
+    [disabled]="isDisabled"
     [type]="
       !isPasswordHidden()
         ? type()

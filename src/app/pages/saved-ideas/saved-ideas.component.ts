@@ -1,14 +1,23 @@
 import { Component, inject, signal } from '@angular/core';
 import { NavbarComponent, AccordionListComponent, TabComponent, ITabData } from '@shared';
 import { FormsModule } from '@angular/forms';
-import { IdeasStore } from '../../store/ideas/ideas.store';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-home',
-  imports: [NavbarComponent, TabComponent, FormsModule, AccordionListComponent],
-  templateUrl: './home.component.html',
+  selector: 'app-saved-ideas',
+  imports: [
+    NavbarComponent,
+    TabComponent,
+    FormsModule,
+    AccordionListComponent,
+    MatButtonModule,
+  ],
+  templateUrl: './saved-ideas.component.html',
 })
-export default class HomeComponent {
+export default class SavedIdeasComponent {
+  readonly dialog = inject(MatDialog);
+
   tabs = signal([
     { label: 'Tab 1', id: 1 },
     { label: 'Tab 2', id: 2 },

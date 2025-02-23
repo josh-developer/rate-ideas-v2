@@ -2,7 +2,7 @@
   <button class="text-2xl" [routerLink]="['/home']">Idea-up</button>
   <div class="flex gap-3 items-center">
     <button mat-button class="primary-button !bg-white" [routerLink]="['/my-ideas']" routerLinkActive="!text-blue-400">My ideas</button>
-    <button mat-button class="primary-button !bg-white" [routerLink]="['/saved']" routerLinkActive="!text-blue-400">Saved ideas</button>
-    <button mat-button class="primary-button !bg-white">Account</button>
+    <button mat-button class="primary-button !bg-white" [routerLink]="['/saved-ideas']" routerLinkActive="!text-blue-400">Saved ideas</button>
+    <button mat-button class="primary-button !bg-white" (click)="openAccountModal()">Account</button>
   </div>
 </nav>

@@ -11,8 +11,11 @@
           placeholder="Your birthdate"
           [max]="ageRestrictions.max"
           [min]="ageRestrictions.min" />
-        <app-input type="email" [placeholder]="'Your email'" />
-        <app-input [placeholder]="'Enter your password'" [type]="'password'" />
+        <app-input type="email" [placeholder]="'Your email'" icon="custom-email" />
+        <app-input
+          [placeholder]="'Enter your password'"
+          [type]="'password'"
+          icon="password" />
         <button
           type="button"
           mat-button
