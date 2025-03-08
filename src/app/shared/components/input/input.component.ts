@@ -6,7 +6,11 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 
 enum InputTypes {
@@ -41,11 +45,13 @@ export class InputComponent implements ControlValueAccessor {
   type = input<'text' | 'password' | 'email'>(InputTypes.Text);
   placeholder = input<string>('');
   icon = input<string>('');
+  control = input<AbstractControl<any, any> | null>();
 
   inputTypes = InputTypes;
 
+  error = signal('');
   onPasswordToggle(): void {
-    this.isPasswordHidden.update(value => !value);
+    this.isPasswordHidden.update((value) => !value);
   }
 
   onFocus(): void {
@@ -80,7 +86,46 @@ export class InputComponent implements ControlValueAccessor {
 
   onInputChange(value: string) {
     this.innerValue = value;
-    this.onChange(value); // Notify Angular about the change
-    this.onTouched(); // Mark as touched when the user interacts
+    this.onChange(value);
+    this.onTouched();
+
+    if (this.control()) {
+      const firstError = Object.keys(this.control()?.errors || {})[0];
+      if (!firstError) {
+        this.error.set('');
+        return;
+      }
+
+      switch (firstError) {
+        case 'minlength':
+          this.error.set(
+            `Password must be at least ${
+              this.control()?.errors?.[firstError]?.requiredLength
+            } characters long`
+          );
+          break;
+
+        case 'maxlength':
+          this.error.set(
+            `Password must be maximum ${
+              this.control()?.errors?.[firstError]?.requiredLength
+            } characters long`
+          );
+          break;
+
+        case 'required':
+          this.error.set(`Required`);
+          break;
+
+        case 'uppercaseLowercase':
+          this.error.set(
+            'Password must contain at least one uppercase letter and one lowercase letter'
+          );
+          break;
+
+        default:
+          this.error.set('Error: ' + this.control()?.errors?.[firstError]);
+      }
+    }
   }
 }

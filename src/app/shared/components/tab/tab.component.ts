@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
-import { ITabData } from '../../models/frontend/Tab';
+import { ITabData } from '../../models/frontend/tab';
 
 @Component({
   selector: 'app-tab',

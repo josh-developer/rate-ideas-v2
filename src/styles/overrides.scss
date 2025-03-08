@@ -29,6 +29,10 @@
   color: #1d2939 !important;
   padding: 0.75rem 1rem !important;
   border-radius: 0.5rem !important;
+
+  &:disabled {
+    opacity: 0.7 !important;
+  }
 }
 
 .rounded-icon-button {

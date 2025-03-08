@@ -1,10 +1,11 @@
 <div class="pl-24 pr-6 py-11 w-full h-full">
   <div class="w-full h-full grid grid-cols-2 gap-8 items-center">
     <form
-    (ngSubmit)="onSubmit()"
+      (ngSubmit)="onSubmit()"
       [formGroup]="loginForm"
       autocomplete="off"
-      class="flex flex-col gap-12 p-6 max-w-[600px]">
+      class="flex flex-col gap-12 p-6 max-w-[600px]"
+    >
       <div class="flex flex-col gap-2.5">
         <h1 class="text-gray-700 text-4xl">Log in to your account</h1>
         <span class="gilroy-medium text-lg text-gray-500"
@@ -14,20 +15,26 @@
 
       <div class="flex flex-col gap-3">
         <app-input
+          [control]="loginForm.get('emailOrUserName')"
           formControlName="emailOrUserName"
           [placeholder]="'Enter your username or email'"
-          icon="custom-email" />
+          icon="custom-email"
+        />
         <app-input
           formControlName="password"
+          [control]="loginForm.get('password')"
           [placeholder]="'Enter your password'"
           [type]="'password'"
-          icon="password" />
+          icon="password"
+        />
         <a href="#" class="gilroy-medium text-right text-sm text-blue-600">
           Forgot password
         </a>
-        <button         
+        <button
+          [disabled]="loginForm.invalid"
           mat-button
-          class="primary-icon-button !bg-success !text-white">
+          class="primary-icon-button !bg-success !text-white"
+        >
           Login
         </button>
         <div class="h-0.5 w-[70%] bg-gray-200 relative my-2 mx-auto">

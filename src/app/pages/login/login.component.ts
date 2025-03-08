@@ -9,7 +9,10 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { InputComponent } from '@shared';
-import { LoginFormValue } from '../../shared/models/backend/ILogin';
+import { UserStore } from '../../store/user/user.store';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +22,9 @@ import { LoginFormValue } from '../../shared/models/backend/ILogin';
 })
 export default class LoginComponent implements OnInit {
   formBuilder = inject(FormBuilder);
+  snackBarService = inject(SnackbarService);
+  userStore = inject(UserStore);
+  router = inject(Router);
 
   loginForm!: FormGroup;
 
@@ -27,17 +33,35 @@ export default class LoginComponent implements OnInit {
       emailOrUserName: ['', [Validators.required, Validators.minLength(3)]],
       password: [
         '',
-        [Validators.required, Validators.minLength(6), this.uppercaseLowercaseValidator],
+        [
+          Validators.required,
+          Validators.minLength(6),
+          this.uppercaseLowercaseValidator,
+        ],
       ],
     });
   }
 
   onSubmit(): void {
-    console.log(this.loginForm.value);
-    console.log(this.loginForm.valid)
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.userStore.login(this.loginForm.value).subscribe({
+      next: ({ data }) => {
+        if (data.token) {
+          this.router.navigateByUrl('/home');
+        }
+      },
+      error: (error) => {
+        this.snackBarService.showAlert(error?.error?.message);
+      },
+    });
   }
 
-  uppercaseLowercaseValidator(control: AbstractControl): ValidationErrors | null {
+  uppercaseLowercaseValidator(
+    control: AbstractControl
+  ): ValidationErrors | null {
     const value = control.value;
     if (!/[A-Z]/.test(value) || !/[a-z]/.test(value)) {
       return { uppercaseLowercase: true };
