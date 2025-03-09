@@ -11,7 +11,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { InputComponent } from '@shared';
 import { UserStore } from '../../store/user/user.store';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({

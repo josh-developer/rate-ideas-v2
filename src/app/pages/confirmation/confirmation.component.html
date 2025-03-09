@@ -7,7 +7,7 @@
       </div>
       <div class="flex flex-col items-center gap-1">
         <h2 class="text-2xl text-secondary text-center">
-          Enter the password that was sent to your email address
+          {{messageAndEmail.message}}
         </h2>
         <span class="text-info text-sm gilroy-medium text-center max-w-[67%]"
           >We sent a 4-digit code to the e-mail address gmail.com. Please enter it
@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div class="w-[252px]">
+    <div class="w-[452px] ">
       <app-input-group (onValuesFilled)="onFilled($event)" />
     </div>
     <div></div>

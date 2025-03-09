@@ -1,14 +1,13 @@
-import { Component, ElementRef, input, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, ViewChild, signal, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
+import { AbstractControl, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-datepicker',
-  templateUrl: 'datepicker.component.html',
-  providers: [provideNativeDateAdapter()],
-  imports: [MatIconModule, MatInputModule, MatDatepickerModule],
+  templateUrl: './datepicker.component.html',
   styles: [
     `
       .focused {
@@ -16,24 +15,44 @@ import { MatInputModule } from '@angular/material/input';
       }
     `,
   ],
+  providers: [provideNativeDateAdapter()],
+  standalone: true,
+  imports: [MatIconModule, MatInputModule, MatDatepickerModule, ReactiveFormsModule],
 })
-export class DatepickerComponent {
-  datepickerContainer = viewChild<ElementRef<HTMLDivElement>>('datepickerContainer');
-  isPasswordHidden = signal(false);
+export class DatepickerComponent implements OnInit {
+  @ViewChild('datepickerContainer') datepickerContainer!: ElementRef<HTMLDivElement>;
 
-  placeholder = input<string>('');
-  max = input<Date | null>(null);
-  min = input<Date | null>(null);
+  @Input() placeholder: string = 'Select Date';
+  @Input() max: Date | null = null;
+  @Input() min: Date | null = null;
+  @Input() control: FormControl<any> = new FormControl(null);
+  @Output() dateSelected = new EventEmitter<Date>(); // ✅ Output Event qo'shildi
 
-  onPasswordToggle(): void {
-    this.isPasswordHidden.update(value => !value);
+  selectedDate = signal<Date | null>(null);
+
+  ngOnInit() {
+    this.control.valueChanges.subscribe(value => {
+      this.selectedDate.set(value);
+      console.log(value)
+    });
+  }
+
+  onDateChange(event: any) {
+    if (event.value) {
+      this.dateSelected.emit(event.value); // ✅ Sana tanlanganda yuboriladi
+      console.log("DatepickerComponent: Tanlangan sana:", event.value);
+    }
   }
 
   onFocus(): void {
-    this.datepickerContainer()?.nativeElement.classList.add('focused');
+    if (this.datepickerContainer) {
+      this.datepickerContainer.nativeElement.classList.add('focused');
+    }
   }
 
   onBlur(): void {
-    this.datepickerContainer()?.nativeElement.classList.remove('focused');
+    if (this.datepickerContainer) {
+      this.datepickerContainer.nativeElement.classList.remove('focused');
+    }
   }
 }

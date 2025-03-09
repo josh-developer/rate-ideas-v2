@@ -1,32 +1,73 @@
 <div class="pl-24 pr-6 py-11 w-full h-full">
   <div class="w-full h-full grid grid-cols-2 gap-8 items-center">
-    <form class="flex flex-col gap-12 p-6 max-w-[600px]">
+    <form
+      class="flex flex-col gap-12 p-6 max-w-[600px]"
+      (ngSubmit)="onSubmit()"
+      [formGroup]="signupForm"
+      autocomplete="off"
+    >
       <div class="flex flex-col gap-2.5">
         <h1 class="text-gray-700 text-4xl">Sign up</h1>
       </div>
 
       <div class="flex flex-col gap-3">
-        <app-input [placeholder]="'Your name'" />
+        <app-input
+          [control]="signupForm.get('firstName')"
+          formControlName="firstName"
+          placeholder="First Name"
+        ></app-input>
+        <app-input
+          [control]="signupForm.get('lastName')"
+          formControlName="lastName"
+          placeholder="Last Name"
+        ></app-input>
+        <app-input
+          [control]="signupForm.get('userName')"
+          formControlName="userName"
+          placeholder="Username"
+        ></app-input>
         <app-datepicker
           placeholder="Your birthdate"
+          formControlName="dateOfBirth"
+          (dateSelected)="onDateSelected($event)"
           [max]="ageRestrictions.max"
-          [min]="ageRestrictions.min" />
-        <app-input type="email" [placeholder]="'Your email'" icon="custom-email" />
+          [min]="ageRestrictions.min"
+        ></app-datepicker>
+        <app-input
+          type="email"
+          [placeholder]="'Your email'"
+          icon="custom-email"
+          [control]="signupForm.get('email')"
+          formControlName="email"
+        ></app-input>
         <app-input
           [placeholder]="'Enter your password'"
           [type]="'password'"
-          icon="password" />
+          icon="password"
+          [control]="signupForm.get('password')"
+          formControlName="password"
+        ></app-input>
+        <app-input
+          [control]="signupForm.get('confirmPassword')"
+          formControlName="confirmPassword"
+          type="password"
+          icon="password"
+          placeholder="Confirm Password"
+        ></app-input>
+
         <button
-          type="button"
+          type="submit"
           mat-button
-          class="primary-icon-button !bg-success !text-white">
+          class="primary-icon-button !bg-success !text-white"
+        >
           Sign up
         </button>
         <div class="h-0.5 w-[70%] bg-gray-200 relative my-2 mx-auto">
           <span
             class="absolute px-2 bg-white text-gray-400 gilroy-medium left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            >or</span
           >
+            or
+          </span>
         </div>
 
         <p class="text-lg gilroy-medium text-center text-gray-500">

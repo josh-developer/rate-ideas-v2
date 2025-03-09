@@ -5,14 +5,15 @@
   <mat-icon svgIcon="date" class="text-gray-500 !min-w-6" />
 
   <input
-    type="text"
-    [matDatepicker]="picker"
-    [placeholder]="placeholder()"
-    (blur)="onBlur()"
-    [min]="min()"
-    [max]="max()"
-    (focus)="onFocus()"
-    class="bg-transparent w-full focus:outline-none" />
+  matInput
+  [matDatepicker]="picker"
+  [formControl]="control"  
+  (dateChange)="onDateChange($event)" 
+
+  (focus)="onFocus()"
+  (blur)="onBlur()"
+  [min]="min"
+  [max]="max"/>
 
   <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
   <mat-datepicker #picker></mat-datepicker>
