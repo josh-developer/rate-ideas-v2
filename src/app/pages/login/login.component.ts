@@ -17,7 +17,7 @@ import { SnackbarService } from '../../services/snackbar.service';
   selector: 'app-login',
   templateUrl: 'login.component.html',
   styleUrl: 'login.component.scss',
-  imports: [InputComponent, MatButtonModule, ReactiveFormsModule],
+  imports: [InputComponent, MatButtonModule, ReactiveFormsModule, ],
 })
 export default class LoginComponent implements OnInit {
   formBuilder = inject(FormBuilder);
