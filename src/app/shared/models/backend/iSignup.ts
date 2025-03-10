@@ -1,9 +1,9 @@
 export interface SignUpFormValue {
   firstName: string;
   lastName: string;
-  userName: string;
+  UserName: string;
   email: string;
   password: string;
   confirmPassword: string;
-  dateOfBirth: string | Date;
+  dateOfBirth: string;
 }

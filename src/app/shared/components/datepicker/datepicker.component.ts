@@ -1,14 +1,23 @@
-import { Component, ElementRef, input, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-datepicker',
   templateUrl: 'datepicker.component.html',
   providers: [provideNativeDateAdapter()],
-  imports: [MatIconModule, MatInputModule, MatDatepickerModule],
+  standalone: true,
+  imports: [MatIconModule, MatInputModule, MatDatepickerModule, FormsModule],
   styles: [
     `
       .focused {
@@ -18,22 +27,30 @@ import { MatInputModule } from '@angular/material/input';
   ],
 })
 export class DatepickerComponent {
-  datepickerContainer = viewChild<ElementRef<HTMLDivElement>>('datepickerContainer');
-  isPasswordHidden = signal(false);
+  @ViewChild('datepickerContainer')
+  datepickerContainer!: ElementRef<HTMLDivElement>;
 
-  placeholder = input<string>('');
-  max = input<Date | null>(null);
-  min = input<Date | null>(null);
+  // 📌 Input for Parent to Set Min, Max, Placeholder
+  @Input() placeholder: string = '';
+  @Input() max: Date | null = null;
+  @Input() min: Date | null = null;
 
-  onPasswordToggle(): void {
-    this.isPasswordHidden.update(value => !value);
+  // 📌 Output Event to Send Date to Parent
+  @Output() dateSelected = new EventEmitter<Date | null>();
+
+  selectedDate: Date | null = null; // Stores the selected date
+
+  // 📌 Triggered when date changes
+  onDateChange(event: any) {
+    this.selectedDate = event.value;
+    this.dateSelected.emit(this.selectedDate); // Emit to Parent
   }
 
   onFocus(): void {
-    this.datepickerContainer()?.nativeElement.classList.add('focused');
+    this.datepickerContainer?.nativeElement.classList.add('focused');
   }
 
   onBlur(): void {
-    this.datepickerContainer()?.nativeElement.classList.remove('focused');
+    this.datepickerContainer?.nativeElement.classList.remove('focused');
   }
 }

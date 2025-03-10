@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { IResponse } from '../shared/models/backend/IResponse';
 import { IUserResponse } from '../shared/models/backend/IUserResponse';
 import { LoginFormValue } from '../shared/models/backend/ILogin';
-
+import { SignUpFormValue } from '../shared/models/backend/iSignup';
 @Injectable({ providedIn: 'root' })
 export class UserService {
   httpClient = inject(HttpClient);
@@ -15,7 +15,27 @@ export class UserService {
       formValue
     );
   }
+  verify(email: string, verificationCode: string) {
+    return this.httpClient.post<IResponse<IUserResponse>>(
+      `${environment.apiUrl}auth/verify-email`,
+      { email, verificationCode }
+    );
+  }
 
+  signup(formValue: SignUpFormValue) {
+    const params = new URLSearchParams({
+      FirstName: formValue.firstName,
+      Email: formValue.email,
+      Password: formValue.password,
+      DateOfBirth: formValue.dateOfBirth,
+      UserName: formValue.UserName,
+    }).toString();
+
+    return this.httpClient.post<IResponse<IUserResponse>>(
+      `${environment.apiUrl}auth/sign-up?${params}`,
+      {}
+    );
+  }
   setToken(access_token: string) {
     localStorage.setItem('access_token', access_token);
   }

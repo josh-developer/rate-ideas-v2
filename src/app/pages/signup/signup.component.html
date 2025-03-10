@@ -1,25 +1,47 @@
 <div class="pl-24 pr-6 py-11 w-full h-full">
   <div class="w-full h-full grid grid-cols-2 gap-8 items-center">
-    <form class="flex flex-col gap-12 p-6 max-w-[600px]">
+    <form
+      class="flex flex-col gap-12 p-6 max-w-[600px]"
+      (ngSubmit)="onSubmit()"
+      [formGroup]="signupForm"
+      autocomplete="off"
+    >
       <div class="flex flex-col gap-2.5">
         <h1 class="text-gray-700 text-4xl">Sign up</h1>
       </div>
 
       <div class="flex flex-col gap-3">
-        <app-input [placeholder]="'Your name'" />
+        <app-input
+          [placeholder]="'Your name'"
+          [control]="signupForm.get('firstName')"
+          formControlName="firstName"
+        />
+        <app-input
+          [placeholder]="'Your UserName'"
+          [control]="signupForm.get('UserName')"
+          formControlName="UserName"
+        />
         <app-datepicker
           placeholder="Your birthdate"
           [max]="ageRestrictions.max"
-          [min]="ageRestrictions.min" />
-        <app-input type="email" [placeholder]="'Your email'" icon="custom-email" />
+          [min]="ageRestrictions.min"
+          (dateSelected)="onDateSelected($event)"
+        />
+        <app-input
+          type="email"
+          [placeholder]="'Your email'"
+          icon="custom-email"
+          [control]="signupForm.get('email')"
+          formControlName="email"
+        />
         <app-input
           [placeholder]="'Enter your password'"
           [type]="'password'"
-          icon="password" />
-        <button
-          type="button"
-          mat-button
-          class="primary-icon-button !bg-success !text-white">
+          icon="password"
+          [control]="signupForm.get('password')"
+          formControlName="password"
+        />
+        <button mat-button class="primary-icon-button !bg-success !text-white">
           Sign up
         </button>
         <div class="h-0.5 w-[70%] bg-gray-200 relative my-2 mx-auto">
@@ -31,7 +53,7 @@
 
         <p class="text-lg gilroy-medium text-center text-gray-500">
           <span>Do you have an account?</span>
-          <a href="#" class="gilroy-medium text-blue-600"> Login </a>
+          <a href="/login" class="gilroy-medium text-blue-600"> Login </a>
         </p>
       </div>
     </form>
