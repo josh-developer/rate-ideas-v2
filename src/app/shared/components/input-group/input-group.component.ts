@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './input-group.component.scss',
 })
 export class InputGroupComponent {
-  inputCount = input(4);
+  inputCount = input(6);
   onValuesFilled = output<string[]>();
 
   inputs = viewChildren<ElementRef<HTMLInputElement>>('input');

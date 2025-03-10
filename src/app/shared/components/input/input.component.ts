@@ -65,8 +65,8 @@ export class InputComponent implements ControlValueAccessor {
   // --------- Custom value accessor logic ---------
   innerValue = '';
   isDisabled: boolean = false;
-  onChange: (value: any) => void = () => {};
-  onTouched: () => void = () => {};
+  onChange: (value: any) => void = () => { };
+  onTouched: () => void = () => { };
 
   writeValue(value: any): void {
     this.innerValue = value;
@@ -91,6 +91,7 @@ export class InputComponent implements ControlValueAccessor {
 
     if (this.control()) {
       const firstError = Object.keys(this.control()?.errors || {})[0];
+      console.log(firstError)
       if (!firstError) {
         this.error.set('');
         return;
@@ -99,16 +100,14 @@ export class InputComponent implements ControlValueAccessor {
       switch (firstError) {
         case 'minlength':
           this.error.set(
-            `Password must be at least ${
-              this.control()?.errors?.[firstError]?.requiredLength
+            `Password must be at least ${this.control()?.errors?.[firstError]?.requiredLength
             } characters long`
           );
           break;
 
         case 'maxlength':
           this.error.set(
-            `Password must be maximum ${
-              this.control()?.errors?.[firstError]?.requiredLength
+            `Password must be maximum ${this.control()?.errors?.[firstError]?.requiredLength
             } characters long`
           );
           break;
@@ -120,6 +119,11 @@ export class InputComponent implements ControlValueAccessor {
         case 'uppercaseLowercase':
           this.error.set(
             'Password must contain at least one uppercase letter and one lowercase letter'
+          );
+          break;
+        case "usernameInvalid":
+          this.error.set(
+            "Username must contain at least one uppercase letter, one lowercase letter, and only letters or numbers (no spaces or special characters)."
           );
           break;
 
