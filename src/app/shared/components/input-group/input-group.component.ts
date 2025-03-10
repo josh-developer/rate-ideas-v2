@@ -1,4 +1,10 @@
-import { Component, ElementRef, input, output, viewChildren } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  input,
+  output,
+  viewChildren,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -8,7 +14,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './input-group.component.scss',
 })
 export class InputGroupComponent {
-  inputCount = input(4);
+  inputCount = input(6);
   onValuesFilled = output<string[]>();
 
   inputs = viewChildren<ElementRef<HTMLInputElement>>('input');
@@ -36,7 +42,9 @@ export class InputGroupComponent {
         .at(currIndex + 1)
         ?.nativeElement.focus();
 
-      const isAllFilled = this.inputs().every(inp => inp.nativeElement.value.trim());
+      const isAllFilled = this.inputs().every((inp) =>
+        inp.nativeElement.value.trim()
+      );
       if (isAllFilled) {
         this.emit();
       }
@@ -57,7 +65,7 @@ export class InputGroupComponent {
     input: HTMLInputElement;
     currIndex: number;
   } {
-    const currentInputIndex = this.inputs().findIndex(inp => {
+    const currentInputIndex = this.inputs().findIndex((inp) => {
       return inp.nativeElement.id === id;
     });
 
@@ -68,7 +76,7 @@ export class InputGroupComponent {
   }
 
   emit(): void {
-    const values = this.inputs().map(input => input.nativeElement.value);
+    const values = this.inputs().map((input) => input.nativeElement.value);
     this.onValuesFilled.emit(values);
   }
 }
