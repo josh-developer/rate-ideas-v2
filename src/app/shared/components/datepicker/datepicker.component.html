@@ -1,22 +1,21 @@
 <div
-  #datepickerContainer
-  (click)="picker.open()"
-  class="bg-gray-50 flex gap-2 cursor-pointer rounded-lg py-2.5 px-3.5 border border-[#D0D5DD] border-solid"
+#datepickerContainer
+(click)="picker.open()"
+class="bg-gray-50 flex gap-2 cursor-pointer rounded-lg py-2.5 px-3.5 border border-[#D0D5DD] border-solid"
 >
-  <mat-icon svgIcon="date" class="text-gray-500 !min-w-6"></mat-icon>
+<mat-icon svgIcon="date" class="text-gray-500 !min-w-6"></mat-icon>
 
-  <input
-    type="text"
-    [matDatepicker]="picker"
-    [placeholder]="placeholder"
-    [min]="min"
-    [max]="max"
-    [(ngModel)]="selectedDate"
-    (dateChange)="onDateChange($event)"
-    (focus)="onFocus()"
-    (blur)="onBlur()"
-    class="bg-transparent w-full focus:outline-none"
-  />
+<input
+  type="text"
+  [matDatepicker]="picker"
+  [placeholder]="placeholder()"
+  [min]="min()"
+  [max]="max()"
+  [(ngModel)]="value"
+  (focus)="onFocus()"
+  (blur)="onBlur()"
+  class="bg-transparent w-full focus:outline-none"
+/>
 
-  <mat-datepicker #picker></mat-datepicker>
+<mat-datepicker #picker></mat-datepicker>
 </div>

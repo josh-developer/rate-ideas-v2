@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { InputGroupComponent } from '@shared';
 import { UserStore } from '../../store/user/user.store';
@@ -13,24 +13,29 @@ import { SnackbarService } from '../../services/snackbar.service';
 })
 export default class ConfirmationComponent {
   userStore = inject(UserStore);
-  email!: string;
   router = inject(Router);
   snackBarService = inject(SnackbarService);
+  
+  email = signal('');
 
   onFilled(values: string[]) {
-    this.userStore.verify(this.email, values.join('')).subscribe({
+    this.userStore.verify(this.email(), values.join('')).subscribe({
       next: ({ data }) => {
         if (data.token) {
           this.router.navigateByUrl('/home');
         }
       },
-      error: (error) => {
+      error: error => {
         this.snackBarService.showAlert(error?.error?.message);
       },
     });
   }
 
   ngOnInit() {
-    this.email = this.userStore.email();
+    if(!this.userStore.email()) {
+      this.router.navigateByUrl('/login')
+    }
+
+    this.email.set(this.userStore.email());
   }
 }

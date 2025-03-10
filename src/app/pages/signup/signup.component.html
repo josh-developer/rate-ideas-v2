@@ -4,8 +4,7 @@
       class="flex flex-col gap-12 p-6 max-w-[600px]"
       (ngSubmit)="onSubmit()"
       [formGroup]="signupForm"
-      autocomplete="off"
-    >
+      autocomplete="off">
       <div class="flex flex-col gap-2.5">
         <h1 class="text-gray-700 text-4xl">Sign up</h1>
       </div>
@@ -15,32 +14,29 @@
           [placeholder]="'Your name'"
           [control]="signupForm.get('firstName')"
           formControlName="firstName"
-        />
+          type="text" />
         <app-input
-          [placeholder]="'Your UserName'"
-          [control]="signupForm.get('UserName')"
-          formControlName="UserName"
-        />
+          [placeholder]="'Your userName'"
+          [control]="signupForm.get('userName')"
+          formControlName="userName" />
         <app-datepicker
           placeholder="Your birthdate"
           [max]="ageRestrictions.max"
           [min]="ageRestrictions.min"
-          (dateSelected)="onDateSelected($event)"
-        />
+          formControlName="dateOfBirth"
+          />
         <app-input
           type="email"
           [placeholder]="'Your email'"
           icon="custom-email"
           [control]="signupForm.get('email')"
-          formControlName="email"
-        />
+          formControlName="email" />
         <app-input
           [placeholder]="'Enter your password'"
           [type]="'password'"
           icon="password"
           [control]="signupForm.get('password')"
-          formControlName="password"
-        />
+          formControlName="password" />
         <button mat-button class="primary-icon-button !bg-success !text-white">
           Sign up
         </button>
@@ -53,7 +49,7 @@
 
         <p class="text-lg gilroy-medium text-center text-gray-500">
           <span>Do you have an account?</span>
-          <a href="/login" class="gilroy-medium text-blue-600"> Login </a>
+          <a [routerLink]="['/login']" class="gilroy-medium text-blue-600"> Login </a>
         </p>
       </div>
     </form>

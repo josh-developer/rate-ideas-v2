@@ -1,16 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { InputComponent, DatepickerComponent } from '@shared';
 import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+  InputComponent,
+  DatepickerComponent,
+  uppercaseLowercaseValidator,
+} from '@shared';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SnackbarService } from '../../services/snackbar.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UserStore } from '../../store/user/user.store';
 
 @Component({
@@ -22,6 +19,7 @@ import { UserStore } from '../../store/user/user.store';
     MatButtonModule,
     ReactiveFormsModule,
     DatepickerComponent,
+    RouterLink,
   ],
 })
 export default class SignupComponent {
@@ -34,48 +32,33 @@ export default class SignupComponent {
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],
-      UserName: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.minLength(3)]],
-      dateOfBirth: ['', [Validators.required, Validators.minLength(3)]],
+      userName: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.minLength(3), Validators.email]],
+      dateOfBirth: [new Date(), [Validators.required]],
       password: [
         '',
-        [
-          Validators.required,
-          Validators.minLength(6),
-          this.uppercaseLowercaseValidator,
-        ],
+        [Validators.required, Validators.minLength(6), uppercaseLowercaseValidator],
       ],
     });
-  }
-  uppercaseLowercaseValidator(
-    control: AbstractControl
-  ): ValidationErrors | null {
-    const value = control.value;
-    if (!/[A-Z]/.test(value) || !/[a-z]/.test(value)) {
-      return { uppercaseLowercase: true };
-    }
-    return null;
   }
 
   onSubmit(): void {
     if (this.signupForm.invalid) {
       return;
     }
+    const date = this.signupForm.value.dateOfBirth;
+    const dateOfBirth = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 
-    this.userStore.signup(this.signupForm.value).subscribe({
+    const value = { ...this.signupForm.value, dateOfBirth };
+
+    this.userStore.signup(value).subscribe({
       next: ({ data }) => {
         this.router.navigateByUrl('/confirmation');
       },
-      error: (error) => {
+      error: error => {
         this.snackBarService.showAlert(error?.error?.message);
       },
     });
-  }
-  onDateSelected(e: any) {
-    const formattedDate = `${
-      e.getMonth() + 1
-    }/${e.getDate()}/${e.getFullYear()}`;
-    this.signupForm.get('dateOfBirth')?.setValue(formattedDate);
   }
 
   readonly ageRestrictions = {

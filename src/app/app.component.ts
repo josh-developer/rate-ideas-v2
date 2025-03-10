@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { IconService } from './shared/services/icon.service';
+import { IconService } from '@shared';
 
 @Component({
   selector: 'app-root',

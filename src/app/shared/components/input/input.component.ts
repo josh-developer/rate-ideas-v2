@@ -6,11 +6,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 
 enum InputTypes {
@@ -51,7 +47,7 @@ export class InputComponent implements ControlValueAccessor {
 
   error = signal('');
   onPasswordToggle(): void {
-    this.isPasswordHidden.update((value) => !value);
+    this.isPasswordHidden.update(value => !value);
   }
 
   onFocus(): void {
@@ -111,6 +107,10 @@ export class InputComponent implements ControlValueAccessor {
               this.control()?.errors?.[firstError]?.requiredLength
             } characters long`
           );
+          break;
+
+        case 'email':
+          this.error.set('Must be a valid email');
           break;
 
         case 'required':

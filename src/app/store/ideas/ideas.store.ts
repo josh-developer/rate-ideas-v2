@@ -1,12 +1,5 @@
-import {
-  patchState,
-  signalStore,
-  withMethods,
-  withProps,
-  withState,
-} from '@ngrx/signals';
-import { IIdea } from '../../shared/models/backend/IIdea';
-import { ICategory } from '../../shared/models/backend/ICategory';
+import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { ICategory, IIdea } from '@shared';
 
 interface State {
   ideas: IIdea[];

@@ -1,10 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { IResponse } from '../shared/models/backend/IResponse';
-import { IUserResponse } from '../shared/models/backend/IUserResponse';
-import { LoginFormValue } from '../shared/models/backend/ILogin';
-import { SignUpFormValue } from '../shared/models/backend/iSignup';
+import { IResponse, IUserResponse, LoginFormValue, SignUpFormValue } from '@shared';
 @Injectable({ providedIn: 'root' })
 export class UserService {
   httpClient = inject(HttpClient);
@@ -28,7 +25,7 @@ export class UserService {
       Email: formValue.email,
       Password: formValue.password,
       DateOfBirth: formValue.dateOfBirth,
-      UserName: formValue.UserName,
+      UserName: formValue.userName,
     }).toString();
 
     return this.httpClient.post<IResponse<IUserResponse>>(

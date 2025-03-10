@@ -1,11 +1,13 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
+  forwardRef,
+  input,
   Input,
-  Output,
+  viewChild,
   ViewChild,
 } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -15,7 +17,14 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-datepicker',
   templateUrl: 'datepicker.component.html',
-  providers: [provideNativeDateAdapter()],
+  providers: [
+    provideNativeDateAdapter(),
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DatepickerComponent),
+      multi: true,
+    },
+  ],
   standalone: true,
   imports: [MatIconModule, MatInputModule, MatDatepickerModule, FormsModule],
   styles: [
@@ -26,31 +35,50 @@ import { FormsModule } from '@angular/forms';
     `,
   ],
 })
-export class DatepickerComponent {
-  @ViewChild('datepickerContainer')
-  datepickerContainer!: ElementRef<HTMLDivElement>;
+export class DatepickerComponent implements ControlValueAccessor {
+  datepickerContainer = viewChild<ElementRef<HTMLDivElement>>('datepickerContainer');
 
-  // 📌 Input for Parent to Set Min, Max, Placeholder
-  @Input() placeholder: string = '';
-  @Input() max: Date | null = null;
-  @Input() min: Date | null = null;
+  placeholder = input('');
+  max = input<Date | null>(null);
+  min = input<Date | null>(null);
 
-  // 📌 Output Event to Send Date to Parent
-  @Output() dateSelected = new EventEmitter<Date | null>();
+  private _value: Date | null = null;
 
-  selectedDate: Date | null = null; // Stores the selected date
+  onChange: (value: Date | null) => void = () => {};
+  onTouched: () => void = () => {};
 
-  // 📌 Triggered when date changes
-  onDateChange(event: any) {
-    this.selectedDate = event.value;
-    this.dateSelected.emit(this.selectedDate); // Emit to Parent
+  get value(): Date | null {
+    return this._value;
+  }
+
+  set value(val: Date | null) {
+    this._value = val;
+    this.onChange(val);
+    this.onTouched();
+  }
+
+  writeValue(value: Date | null): void {
+    this._value = value;
+  }
+
+  registerOnChange(fn: (value: Date | null) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    // TODO: Handle disabled state if needed
   }
 
   onFocus(): void {
-    this.datepickerContainer?.nativeElement.classList.add('focused');
+    this.datepickerContainer()?.nativeElement.classList.add('focused');
   }
 
   onBlur(): void {
-    this.datepickerContainer?.nativeElement.classList.remove('focused');
+    this.datepickerContainer()?.nativeElement.classList.remove('focused');
+    this.onTouched();
   }
 }
