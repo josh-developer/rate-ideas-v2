@@ -12,6 +12,7 @@ export class UserService {
       formValue
     );
   }
+
   verify(email: string, verificationCode: string) {
     return this.httpClient.post<IResponse<IUserResponse>>(
       `${environment.apiUrl}auth/verify-email`,
@@ -33,8 +34,17 @@ export class UserService {
       {}
     );
   }
-  setToken(access_token: string) {
+
+  updateProfile(data: FormData) {
+    return this.httpClient.put<IResponse<IUserResponse>>(
+      `${environment.apiUrl}users/update`,
+      data
+    );
+  }
+
+  setToken(access_token: string, user: IUserResponse) {
     localStorage.setItem('access_token', access_token);
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   clearToken() {

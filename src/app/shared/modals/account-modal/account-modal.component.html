@@ -1,22 +1,30 @@
 <h2 mat-dialog-title>Account</h2>
 <hr />
 <mat-dialog-content>
-  <form class="w-full flex flex-col gap-4 p-2 pb-6">
+  <form [formGroup]="form" id="accountForm" (ngSubmit)="onSave()" class="w-full flex flex-col gap-4 p-2 pb-6">
     <!-- --------- Name input --------- -->
-    <app-input [placeholder]="'Change your name'" />
+    <app-input formControlName="firstName" [placeholder]="'Change your name'" />
+   
+    <!-- --------- Username input --------- -->
+    <app-input formControlName="userName" [placeholder]="'Change your username'" />
 
     <!-- --------- Last name input --------- -->
-    <app-input [placeholder]="'Change your lastname'" />
+    <app-input formControlName="lastName" [placeholder]="'Change your lastname'" />
+
+    <!-- --------- Datebirth input --------- -->
+    <app-datepicker
+    placeholder="Your birthdate"
+    [max]="ageRestrictions.max"
+    [min]="ageRestrictions.min"
+    formControlName="dateOfBirth"
+    />
 
     <!-- --------- Email input --------- -->
-    <app-input [placeholder]="'Change your email'" />
-
-    <!-- --------- Password input --------- -->
-    <app-input [placeholder]="'Change your password'" [type]="'password'" />
+    <app-input formControlName="email" [placeholder]="'Change your email'" />
   </form>
 </mat-dialog-content>
 <hr />
 <mat-dialog-actions>
   <button mat-button (click)="dialogRef.close()">Cancel</button>
-  <button mat-button class="!bg-success !text-white">Save</button>
+  <button mat-button [disabled]="form.invalid || isLoading()" form="accountForm" type="submit" class="!bg-success !text-white disabled:!opacity-50">Save</button>
 </mat-dialog-actions>

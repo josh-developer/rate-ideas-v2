@@ -1,5 +1,11 @@
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
-import { inject } from '@angular/core';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+import { computed, inject } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { tap } from 'rxjs';
 import { Router } from '@angular/router';
@@ -19,6 +25,10 @@ const initialState: State = {
 export const UserStore = signalStore(
   { providedIn: 'root' },
   withState<State>(initialState),
+  withComputed(({ user, access_token }) => ({
+    getUser: computed(() => user() || JSON.parse(localStorage.getItem('user')!)),
+    getToken: computed(() => access_token() || localStorage.getItem('access_token')!),
+  })),
   withMethods((state, userService = inject(UserService), router = inject(Router)) => ({
     login: (form: LoginFormValue) => {
       return userService.login(form).pipe(
@@ -27,11 +37,12 @@ export const UserStore = signalStore(
             access_token: data.token,
             user: data,
           });
-          userService.setToken(data.token);
+          userService.setToken(data.token, data);
           router.navigate(['/']);
         })
       );
     },
+
     signup: (form: SignUpFormValue) => {
       return userService.signup(form).pipe(
         tap(() => {
@@ -41,6 +52,19 @@ export const UserStore = signalStore(
         })
       );
     },
+
+    updateProfile: (data: FormData) => {
+      return userService.updateProfile(data).pipe(
+        tap(response => {
+          patchState(state, {
+            user: response.data,
+          });
+
+          userService.setToken(state.getToken()!, response.data);
+        })
+      );
+    },
+
     verify: (email: string, verificationCode: string) => {
       return userService.verify(email, verificationCode).pipe(
         tap(({ data }) => {
@@ -49,7 +73,7 @@ export const UserStore = signalStore(
             access_token: data.token,
           });
 
-          userService.setToken(data.token);
+          userService.setToken(data.token, data);
         })
       );
     },
