@@ -1,13 +1,19 @@
 <div class="bg-secondary py-6 px-12 rounded-[0.875rem] w-full">
-  <h2 class="text-primary-heading text-gray-900 mb-6">{{ title() }}</h2>
+  @if(ideaStore.ideas().length > 0) {
 
-  <div class="flex flex-col gap-3">
-    @for(item of ideaStore.ideas(); track item.id) {
-    <app-accordion-item
-      [item]="item"
-      (onSave)="onSaveClick($event)"
-      [canReact]="canReact()"
-      [canRemove]="canRemove()" />
-    }
-  </div>
+    <h2 class="text-primary-heading text-gray-900 mb-6">{{ title() }}</h2>
+    
+    <div class="flex flex-col gap-3">
+      @for(item of ideaStore.ideas(); track item.id) {
+        <app-accordion-item
+        [item]="item"
+        (onSave)="onSaveClick($event)"
+        (onVote)="onVote($event, item.id)"
+        [canReact]="canReact()"
+        [canRemove]="canRemove()" />
+      }
+    </div>
+  } @else {
+    <p>Huh, no ideas found...</p>
+  }
 </div>

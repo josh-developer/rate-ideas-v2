@@ -5,7 +5,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { catchError, finalize, Observable, of, tap } from 'rxjs';
 import { HTTPLoaderService } from '../services/http-loader.service';
 
 export function httpInterceptor(
@@ -27,6 +27,13 @@ export function httpInterceptor(
       if (event.type === HttpEventType.Response) {
         httpLoaderService.isLoading.set(false);
       }
+    }),
+    finalize(() => {
+      httpLoaderService.isLoading.set(false);
+    }),
+    catchError(error => {
+      httpLoaderService.isLoading.set(false);
+      return of(error);
     })
   );
 }

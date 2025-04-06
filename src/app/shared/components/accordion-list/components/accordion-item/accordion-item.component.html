@@ -30,16 +30,25 @@
       <mat-icon class="!w-6 !h-6" svgIcon="save"></mat-icon>
     </button>
 
-    <button mat-button class="primary-icon-button !bg-gray-100 reaction-active">
+    <!-- -------- Dislike -------  -->
+    <button
+      (click)="onVoteClick(false)"
+      mat-button
+      class="primary-icon-button !bg-gray-100 reaction-active"
+      [class.reaction-active]="isReactionActive(false)">
       <span class="flex items-center gap-2">
-        10 K
+        {{ reactionCount()?.dislikeCount }}
         <mat-icon class="!w-6 !h-6" svgIcon="dislike"></mat-icon>
       </span>
     </button>
-
-    <button mat-button class="primary-icon-button !bg-gray-100 like-button">
+    <!-- -------- Like -------  -->
+    <button
+      (click)="onVoteClick(true)"
+      [class.reaction-active]="isReactionActive(true)"
+      mat-button
+      class="primary-icon-button !bg-gray-100 like-button">
       <span class="flex items-center gap-2">
-        10 K
+        {{ reactionCount()?.likeCount }}
         <mat-icon class="!w-6 !h-6" svgIcon="dislike"></mat-icon>
       </span>
     </button>

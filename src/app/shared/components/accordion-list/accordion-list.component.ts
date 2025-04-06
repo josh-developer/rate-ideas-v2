@@ -15,6 +15,10 @@ export class AccordionListComponent {
   canRemove = input(false);
   canReact = input(true);
 
+  onVote(isUpvote: boolean, id: number) {
+    this.ideaStore.toggleIdeaVote({ isUpvote, ideaId: id }).subscribe();
+  }
+
   onSaveClick(id: number): void {
     this.ideaStore.updateSave(id);
   }
