@@ -1,0 +1,1 @@
+export type PageName = 'home' | 'my-ideas' | 'saved';

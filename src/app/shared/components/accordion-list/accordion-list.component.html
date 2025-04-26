@@ -1,19 +1,21 @@
 <div class="bg-secondary py-6 px-12 rounded-[0.875rem] w-full">
-  @if(ideaStore.ideas().length > 0) {
+  @if(ideas().length > 0) {
 
-    <h2 class="text-primary-heading text-gray-900 mb-6">{{ title() }}</h2>
-    
-    <div class="flex flex-col gap-3">
-      @for(item of ideaStore.ideas(); track item.id) {
-        <app-accordion-item
+  <h2 class="text-primary-heading text-gray-900 mb-6">{{ title() }}</h2>
+
+  <div class="flex flex-col gap-3">
+    @for(item of ideas(); track item.id) { 
+     @if(pageName() !== 'saved' || item.isSaved) {
+      <app-accordion-item
         [item]="item"
         (onSave)="onSaveClick($event)"
         (onVote)="onVote($event, item.id)"
         [canReact]="canReact()"
         [canRemove]="canRemove()" />
-      }
-    </div>
+      } 
+    }
+  </div>
   } @else {
-    <p>Huh, no ideas found...</p>
+  <p>Huh, no ideas found...</p>
   }
 </div>

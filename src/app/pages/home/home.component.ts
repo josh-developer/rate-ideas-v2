@@ -13,14 +13,17 @@ export default class HomeComponent implements OnInit {
   ideasStore = inject(IdeasStore);
   destroyRef = inject(DestroyRef);
 
-  tabs = signal<ITabData[]>([]);  
+  tabs = signal<ITabData[]>([]);
 
   ngOnInit(): void {
+    this.ideasStore.setAllIdeas([]);
+    this.ideasStore.setIdeas(this.ideasStore.activeTab()!);
+
     this.ideasStore
-      .getAllCategories()
+      .getAllIdeas()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(data => {
-        const categories = data.data.map(category => ({
+      .subscribe(() => {
+        const categories = this.ideasStore.categories().map(category => ({
           label: category.name,
           id: category.id,
         }));

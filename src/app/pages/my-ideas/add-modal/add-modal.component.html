@@ -1,22 +1,27 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form" class="w-full">
 <h2 mat-dialog-title>Add idea</h2>
 <mat-dialog-content>
-  <form class="w-full">
     <mat-form-field class="w-full">
       <mat-label>Category</mat-label>
-      <mat-select>
-        @for (topping of ['1', '2', '3']; track topping) {
-        <mat-option [value]="topping">{{ topping }}</mat-option>
+      <mat-select formControlName="categoryId">
+        @for (category of categories(); track category.id) {
+        <mat-option [value]="category.id">{{ category.title }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="w-full">
-      <mat-label>Textarea</mat-label>
-      <textarea [rows]="6" matInput></textarea>
+      <mat-label>Title</mat-label>
+      <input formControlName="title" type="text" matInput />
     </mat-form-field>
-  </form>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="dialogRef.close()">Cancel</button>
-  <button mat-button class="!bg-success !text-white">Save</button>
-</mat-dialog-actions>
+
+    <mat-form-field class="w-full">
+      <mat-label>Description</mat-label>
+      <textarea formControlName="description" [rows]="6" matInput></textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="dialogRef.close()">Cancel</button>
+    <button mat-button class="!bg-success !text-white disabled:opacity-70" [disabled]="this.form.invalid || isLoading()">Save</button>
+  </mat-dialog-actions>
+</form>

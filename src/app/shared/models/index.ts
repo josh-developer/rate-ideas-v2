@@ -1,4 +1,6 @@
 export * from './frontend/tab';
+export * from './frontend/page-name';
+
 export * from './backend/ICategory';
 export * from './backend/IComment';
 export * from './backend/IIdea';

@@ -4,5 +4,10 @@
     <app-tab class="w-full" (tabChange)="onTabsChange($event)" [tabs]="tabs()" />
   </div>
 
-  <app-accordion-list title="Saved ideas" [canRemove]="false" [canReact]="true" />
+  <app-accordion-list
+    pageName="saved"
+    [ideas]="ideasStore.ideas()"
+    title="Saved ideas"
+    [canRemove]="false"
+    [canReact]="true" />
 </main>

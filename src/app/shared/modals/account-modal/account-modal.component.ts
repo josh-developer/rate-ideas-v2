@@ -15,6 +15,7 @@ import { DatepickerComponent, InputComponent } from '../../components';
 import { UserStore } from '../../../store/user/user.store';
 import { DatePipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { createFormData } from '../../utils/create-formdata';
 
 @Component({
   selector: 'account-modal',
@@ -79,15 +80,7 @@ export class AccountModalComponent implements OnInit {
     const dateFormat = this.datePipe.transform(this.form.value.dateOfBirth, 'YYYY-MM-dd');
     this.form.get('dateOfBirth')?.setValue(dateFormat);
 
-    const formData = new FormData();
-
-    Object.keys(this.form.controls).forEach(key => {
-      const control = this.form.get(key);
-
-      if (control && control.value !== null && control.value !== undefined) {
-        formData.append(key, control.value);
-      }
-    });
+  const formData = createFormData(this.form);
 
     this.userStore
       .updateProfile(formData)
